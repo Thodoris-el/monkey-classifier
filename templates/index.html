@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monkey Classifier</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .prediction {
+            margin-top: 30px;
+            font-size: 22px;
+            color: #222;
+        }
+        .preview {
+            margin-top: 20px;
+            max-width: 300px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Monkey Species Classifier</h1>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <br>
+        <input type="submit" value="Classify">
+    </form>
+
+    {% if prediction %}
+        <div class="prediction">
+            <h2>Prediction: <strong>{{ prediction }}</strong></h2>
+        </div>
+        {% if image_data %}
+            <img src="data:image/png;base64,{{ image_data }}" class="preview" alt="Uploaded Image">
+        {% endif %}
+    {% endif %}
+</body>
+</html>

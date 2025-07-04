@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Classifier</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 40px; background-color: #f9f9f9; }
+        .card { background: white; padding: 30px; border-radius: 12px; display: inline-block; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        img { max-width: 300px; margin-top: 20px; border-radius: 12px; }
+        input { margin-top: 20px; padding: 8px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧠 Upload an Image</h1>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required><br>
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+            <h2>Prediction: <strong>{{ prediction }}</strong></h2>
+            {% if image_data %}
+                <img src="data:image/png;base64,{{ image_data }}">
+            {% endif %}
+        {% endif %}
+
+        <br><a href="/" style="text-decoration: none;">⬅ Back to Menu</a>
+    </div>
+</body>
+</html>

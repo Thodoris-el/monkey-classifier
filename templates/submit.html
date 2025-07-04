@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Start Game</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 40px; background-color: #f2f2f2; }
+        .card { background: white; padding: 30px; border-radius: 12px; display: inline-block; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        select, input[type=submit] { padding: 10px 15px; font-size: 16px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎯 Monkey Classifier Game</h1>
+        <p>Pick a class you think the AI will guess correctly!</p>
+        <img src="{{ url_for('static', filename='images/' ~ image_name) }}" alt="Image" style="max-width: 300px; margin: 20px auto; border-radius: 12px;">
+        <form action="/submit" method="post">
+            <label><strong>Your Guess:</strong></label><br>
+            <select name="user_guess" required>
+                {% for c in class_names %}
+                    <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select><br><br>
+            <input type="submit" value="Start Game">
+        </form>
+
+        <br><a href="/" style="text-decoration: none;">⬅ Back to Menu</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Result</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 40px; background-color: #f9f9f9; }
+        .card { background: white; padding: 30px; border-radius: 12px; display: inline-block; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        img { max-width: 300px; margin: 20px auto; border-radius: 12px; }
+        h2, h3 { color: #333; }
+        .result { font-size: 22px; margin-top: 20px; }
+        .btn {
+            padding: 10px 20px; font-size: 16px; margin-top: 30px;
+            background: #007bff; color: white; border: none; border-radius: 8px;
+            text-decoration: none;
+        }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧪 Classification Result</h1>
+
+        <img src="{{ url_for('static', filename='images/' ~ image_name) }}" alt="Image">
+
+        <h2>AI Prediction: <strong>{{ prediction }}</strong></h2>
+        <h2>Your Guess: <strong>{{ user_guess }}</strong></h2>
+        <h2>True Label: <strong>{{ true_label }}</strong></h2>
+
+        <div class="result"><strong>{{ result_message }}</strong></div>
+
+        <a href="/submit" class="btn">🔁 Play Again</a>
+        <br><br>
+        <a href="/" class="btn" style="background: #6c757d;">⬅ Back to Menu</a>
+    </div>
+</body>
+</html>
