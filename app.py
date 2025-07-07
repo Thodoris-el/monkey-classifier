@@ -1,8 +1,12 @@
 # app.py
 from flask import Flask, render_template, request, redirect, url_for, session
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model, Model
 from tensorflow.keras.preprocessing.image import img_to_array
-from tensorflow.keras.applications.efficientnet import preprocess_input
+from tensorflow.keras.applications import InceptionResNetV2
+from tensorflow.keras.layers import Dense, Dropout , BatchNormalization, GlobalAveragePooling2D
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.applications.inception_resnet_v2 import preprocess_input
 from PIL import Image
 import numpy as np
 import os, random, base64
@@ -11,7 +15,24 @@ from io import BytesIO
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-model = load_model("all_labels.h5")
+base_model = InceptionResNetV2(input_shape=(224, 224, 3), include_top=False, weights='imagenet')
+base_model.trainable = True
+
+for layer in base_model.layers[:-30]:
+    layer.trainable = False
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+x = Dropout(0.3)(x)
+x = Dense(128, activation='relu', kernel_regularizer=l2(0.0001))(x)
+x = BatchNormalization()(x)
+outputs = Dense(10, activation='softmax')(x)
+
+model = Model(inputs=base_model.input, outputs=outputs)
+
+adam = Adam(learning_rate=1e-5)
+model.load_weights('all_labels.h5')
+model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
+
 class_labels = ['n0', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6', 'n7', 'n8', 'n9']
 class_names = ['alouatta_palliata', 'erythrocebus_patas', 'cacajao_calvus', 'macaca_fuscata', 'cebuella_pygmea', 'cebus_capucinus', 'mico_argentatus', 'saimiri_sciureus', 'aotus_nigriceps', 'trachypithecus_johnii']
 image_dir = os.path.join("static", "images")
