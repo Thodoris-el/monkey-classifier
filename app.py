@@ -11,6 +11,7 @@ from PIL import Image
 import numpy as np
 import os, random, base64
 from io import BytesIO
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -30,6 +31,7 @@ outputs = Dense(10, activation='softmax')(x)
 model = Model(inputs=base_model.input, outputs=outputs)
 
 adam = Adam(learning_rate=1e-5)
+
 model.load_weights('all_labels.h5')
 model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
 
@@ -97,7 +99,6 @@ def game_page():
     img_exp = np.expand_dims(img_preprocessed, axis=0)
 
     preds = model.predict(img_exp)
-    print(preds)
     prediction = class_names[np.argmax(preds)]
 
     if user_guess == true_label and prediction == true_label:
