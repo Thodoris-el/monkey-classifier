@@ -4,14 +4,14 @@ If you want to use GPU on the requirements.txt comment tensorflow-cpu and uncomm
 ## Intsallation
 
 ### Docker (preferred)
-docker build -t monkeyapp .
-docker run -p 5000:5000 monkeyapp
-Go to: http://localhost:5000/
+* docker build -t monkeyapp .
+* docker run -p 5000:5000 monkeyapp
+* Go to: http://localhost:5000/
 
 ### Local env
-pip install -r requirements.txt
-python app.py
-Go to: http://localhost:5000/
+* pip install -r requirements.txt
+* python app.py
+* Go to: http://localhost:5000/
 
 ## Description
 
